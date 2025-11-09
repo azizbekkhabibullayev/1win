@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1win - Yuklab Olish</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary: #ff6b00;
+            --primary-dark: #e55a00;
+            --secondary: #1a2b4d;
+            --accent: #00c2ff;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --success: #28a745;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0f1b33 0%, #1a2b4d 100%);
+            color: var(--light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            padding: 20px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            background: rgba(26, 43, 77, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo i {
+            font-size: 2.5rem;
+            color: var(--primary);
+        }
+
+        .logo-text {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(to right, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        nav a {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        nav a:hover {
+            color: var(--primary);
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background: var(--primary);
+            transition: width 0.3s;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        .mobile-menu {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 180px 0 100px;
+            background: url('data:image/jpeg;base64,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') no-repeat center center;
+            background-size: cover;
+            position: relative;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(15, 27, 51, 0.8);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 700px;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            color: #e0e0e0;
+        }
+
+        .highlight {
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            margin-top: 40px;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-primary {
+            background: linear-gradient(to right, var(--primary), var(--primary-dark));
+            color: white;
+            box-shadow: 0 5px 15px rgba(255, 107, 0, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255, 107, 0, 0.6);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-3px);
+        }
+
+        /* Features Section */
+        .features {
+            padding: 100px 0;
+            background: rgba(15, 27, 51, 0.7);
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            width: 80px;
+            height: 4px;
+            background: var(--primary);
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 2px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+
+        /* Bonuses Section */
+        .bonuses {
+            padding: 100px 0;
+        }
+
+        .bonus-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .bonus-card {
+            background: linear-gradient(135deg, rgba(255, 107, 0, 0.1) 0%, rgba(0, 194, 255, 0.1) 100%);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            border: 1px solid rgba(255, 107, 0, 0.2);
+            transition: transform 0.3s;
+        }
+
+        .bonus-card:hover {
+            transform: scale(1.05);
+        }
+
+        .bonus-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+
+        .bonus-amount {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin: 20px 0;
+            color: var(--accent);
+        }
+
+        .bonus-card p {
+            margin-bottom: 20px;
+            color: #e0e0e0;
+        }
+
+        /* Download Section */
+        .download {
+            padding: 100px 0;
+            text-align: center;
+        }
+
+        .download-content {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .download-options {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 40px;
+            flex-wrap: wrap;
+        }
+
+        .download-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 15px 25px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            text-decoration: none;
+            color: white;
+            transition: all 0.3s;
+        }
+
+        .download-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-5px);
+        }
+
+        .download-btn i {
+            font-size: 2rem;
+        }
+
+        /* Direct Download Section */
+        .direct-download {
+            padding: 80px 0;
+            background: rgba(15, 27, 51, 0.7);
+            text-align: center;
+        }
+
+        .download-steps {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 40px;
+            flex-wrap: wrap;
+        }
+
+        .step {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 30px;
+            width: 250px;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .step:hover {
+            transform: translateY(-10px);
+        }
+
+        .step-number {
+            width: 50px;
+            height: 50px;
+            background: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .step h3 {
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+
+        .download-button {
+            margin-top: 40px;
+        }
+
+        .download-button .btn {
+            font-size: 1.3rem;
+            padding: 20px 40px;
+        }
+
+        /* Footer */
+        footer {
+            background: #0a1429;
+            padding: 60px 0 30px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-column h3 {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            color: var(--primary);
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-column a {
+            color: #b0b0b0;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-column a:hover {
+            color: var(--primary);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #b0b0b0;
+            font-size: 0.9rem;
+        }
+
+        /* Download Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, #1a2b4d 0%, #0f1b33 100%);
+            border-radius: 15px;
+            padding: 40px;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            position: relative;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--light);
+        }
+
+        .modal-icon {
+            font-size: 4rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+
+        .progress {
+            height: 100%;
+            background: var(--primary);
+            width: 0%;
+            transition: width 0.3s;
+        }
+
+        .download-info {
+            margin: 20px 0;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .hero h1 {
+                font-size: 2.8rem;
+            }
+            
+            nav ul {
+                gap: 20px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .mobile-menu {
+                display: block;
+            }
+            
+            nav ul {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: var(--secondary);
+                flex-direction: column;
+                padding: 20px;
+                text-align: center;
+                gap: 15px;
+                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            }
+            
+            nav ul.show {
+                display: flex;
+            }
+            
+            .hero {
+                padding: 150px 0 80px;
+            }
+            
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .cta-buttons {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .download-steps {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+            
+            .section-title h2 {
+                font-size: 2rem;
+            }
+            
+            .feature-card, .bonus-card, .step {
+                padding: 20px;
+            }
+            
+            .modal-content {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-trophy"></i>
+                    <div class="logo-text">1WIN</div>
+                </div>
+                <nav>
+                    <div class="mobile-menu">
+                        <i class="fas fa-bars"></i>
+                    </div>
+                    <ul>
+                        <li><a href="#home">Bosh Sahifa</a></li>
+                        <li><a href="#bonuses">Bonuslar</a></li>
+                        <li><a href="#features">Imkoniyatlar</a></li>
+                        <li><a href="./1win.com (2).apk" download="">Yuklab Olish</a></li>
+                        <li><a href="https://t.me/Alisher_283">Yordam</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
+            <div class="hero-content">
+                <h1><span class="highlight">1win</span> - Mobil Ilovani Yuklab Oling</h1>
+                <p>Endi 1win ilovasini to'g'ridan-to'g'ri ushbu sahifadan yuklab oling va g'alabalaringizni istalgan joyda kuzating. <span class="highlight">Tez, oson va xavfsiz!</span></p>
+                <div class="cta-buttons">
+                    <a href="#" class="btn btn-primary" id="register-btn">
+                        <i class="fas fa-user-plus"></i> Ro'yxatdan O'tish
+                    </a>
+                    <a href="./1win.com (2).apk" download class="btn btn-secondary">
+                        <i class="fas fa-download"></i> Ilovani Yuklab Olish
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="container">
+            <div class="section-title">
+                <h2>Nima Uchun 1win?</h2>
+                <p>1 Win ning afzalliklari</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3>Tezkor Ishlash</h3>
+                    <p>Ilova maxsus optimallashtirilgan bo'lib, har qanday vaziyatda tez ishlaydi.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3>Qulay Interfeys</h3>
+                    <p>Intuitiv va foydalanish uchun qulay interfeys, barcha funksiyalar qo'lingizning istagida.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Yuqori Xavfsizlik</h3>
+                    <p>Shaxsiy ma'lumotlaringiz va mablag'laringiz ilg'or shifrlash texnologiyalari bilan himoyalangan.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-bell"></i>
+                    </div>
+                    <h3>Bildirishnomalar</h3>
+                    <p>Sevimli o'yinlaringiz va musobaqalaringiz haqida darhol bildirishnoma oling.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Direct Download Section -->
+    <section  id="download" class="direct-download" id="direct-download">
+        <div class="container">
+            <div class="section-title">
+                <h2>Ilovani To'g'ridan-to'g'ri Yuklab Olish</h2>
+                <p>Quyidagi oddiy qadamlarni bajaring va ilovani yuklab oling</p>
+            </div>
+            <div class="download-steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Yuklab Olish Tugmasini Bosing</h3>
+                    <p>Quyidagi "Yuklab Olish" tugmasini bosing</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>Ruxsat Berish</h3>
+                    <p>Brauzeringiz so'raganda, faylni yuklab olishga ruxsat bering</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>O'rnatish</h3>
+                    <p>Yuklab olingan faylni o'zingizning qurilmangizga o'rnating</p>
+                </div>
+            </div>
+            <div class="download-button">
+                <button class="btn btn-primary" id="direct-download-btn">
+                    <i class="fas fa-download"></i> <a href="./1win.com (2).apk" class="btn btn-secondary" download>1win Ilovasini Yuklab Olish (APK)</a> 
+                </button>
+            </div>
+            <p style="margin-top: 20px; color: #b0b0b0; font-size: 0.9rem;">Fayl hajmi: 4.4 MB | Versiya: 2.4.1 | Yangilangan: 12.12.2023</p>
+        </div>
+    </section>
+
+    <!-- Bonuses Section -->
+    <section class="bonuses" id="bonuses">
+        <div class="container">
+            <div class="section-title">
+                <h2>Mobil Ilova Bonuslari</h2>
+                <p>Mobil ilova orqali ro'yxatdan o'ting va maxsus bonuslardan bahramand bo'ling</p>
+            </div>
+            <div class="bonus-cards">
+                <div class="bonus-card">
+                    <h3>Mobil Bonus</h3>
+                    <div class="bonus-amount">+20% BONUS</div>
+                    <p>Mobil ilova orqali birinchi depozitingizga qo'shimcha 20% bonus oling.</p>
+                    <a class="btn btn-primary" href="https://1wekdx.com/casino/list?open=register&p=vwuh">Bonusni Faollashtirish</a>
+                </div>
+                <div class="bonus-card">
+                    <h3>Tezkor Ro'yxatdan O'tish</h3>
+                    <div class="bonus-amount">$10 BEPUL</div>
+                    <p>Mobil ilova orqali ro'yxatdan o'ting va darhol $10 bepul tikish oling.</p>
+                    <a class="btn btn-primary" href="https://1wekdx.com/casino/list?open=register&p=vwuh">Ro'yxatdan O'tish</a>
+                </div>
+                <div class="bonus-card">
+                    <h3>Mobil Cashback</h3>
+                    <div class="bonus-amount">10% HAFTALIK</div>
+                    <p>Mobil ilova orqali qilgan barcha harakatlaringiz uchun 10% cashback.</p>
+                    <a class="btn btn-primary" href="https://1wekdx.com/casino/list?open=register&p=vwuh">Batafsil Ma'lumot</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Download Modal -->
+    <div class="modal" id="downloadModal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div class="modal-icon">
+                <i class="fas fa-download"></i>
+            </div>
+            <h2>Yuklab Olish Boshlanmoqda</h2>
+            <div class="download-info">
+                <p><strong>Fayl:</strong> 1win_app_v2.4.1.apk</p>
+                <p><strong>Hajmi:</strong> 4.4 MB</p>
+            </div>
+            <div class="progress-bar">
+                <div class="progress" id="downloadProgress"></div>
+            </div>
+            <p id="downloadStatus">Yuklab olish tayyorlanmoqda...</p>
+            <div id="downloadComplete" style="display: none;">
+                <p style="color: var(--success); margin: 20px 0;"><i class="fas fa-check-circle"></i> Yuklab olish muvaffaqiyatli yakunlandi!</p>
+                <button class="btn btn-primary" id="installBtn">Ok</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>1WIN</h3>
+                    <p>Sport ishqibozlari va kazino muxlislari uchun eng yaxshi bukmekerlik platformasi.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Tezkor Havolalar</h3>
+                    <ul>
+                        <li><a href="#home">Bosh Sahifa</a></li>
+                        <li><a href="#bonuses">Bonuslar</a></li>
+                        <li><a href="#features">Imkoniyatlar</a></li>
+                        <li><a href="#download">Yuklab Olish</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Qo'llab-quvvatlash</h3>
+                    <ul>
+                        <li><a href="#">Yordam Markazi</a></li>
+                        <li><a href="#">Biz Bilan Bog'laning</a></li>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Mas'uliyatli O'yin</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Qonuniylik</h3>
+                    <ul>
+                        <li><a href="#">Foydalanish Shartlari</a></li>
+                        <li><a href="#">Maxfiylik Siyosati</a></li>
+                        <li><a href="#">Cookie Siyosati</a></li>
+                        <li><a href="#">Litsenziya</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 1WIN. Barcha huquqlar himoyalangan. | Faqat 18+. Iltimos, mas'uliyat bilan o'ynang.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        document.querySelector('.mobile-menu').addEventListener('click', function() {
+            document.querySelector('nav ul').classList.toggle('show');
+        });
+
+        // Registration button click
+        document.getElementById('register-btn').addEventListener('click', function(e) {
+            e.preventDefault();
+            // Haqiqiy amalga oshirishda bu haqiqiy ro'yxatdan o'tish sahifasiga yo'naltiradi
+            window.location.href = 'https://1wekdx.com/casino/list?open=register&p=vwuh';
+        });
+
+        // Direct download button
+        document.getElementById('direct-download-btn').addEventListener('click', function() {
+            const modal = document.getElementById('downloadModal');
+            const progressBar = document.getElementById('downloadProgress');
+            const downloadStatus = document.getElementById('downloadStatus');
+            const downloadComplete = document.getElementById('downloadComplete');
+            
+            // Show modal
+            modal.style.display = 'flex';
+            
+            // Simulate download progress
+            let progress = 0;
+            const interval = setInterval(() => {
+                progress += Math.random() * 10;
+                if (progress >= 100) {
+                    progress = 100;
+                    clearInterval(interval);
+                    
+                    // Download complete
+                    downloadStatus.textContent = "Yuklab olish yakunlandi!";
+                    downloadComplete.style.display = 'block';
+                }
+                
+                progressBar.style.width = progress + '%';
+                downloadStatus.textContent = "Yuklab olinmoqda: " + Math.round(progress) + "%";
+            }, 200);
+        });
+
+        // Close modal
+        document.querySelector('.close-modal').addEventListener('click', function() {
+            document.getElementById('downloadModal').style.display = 'none';
+        });
+
+        // Install button
+        document.getElementById('installBtn').addEventListener('click', function() {
+            document.getElementById('downloadModal').style.display = 'none';
+        });
+
+        // Close modal when clicking outside
+        window.addEventListener('click', function(event) {
+            const modal = document.getElementById('downloadModal');
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 100,
+                        behavior: 'smooth'
+                    });
+                    
+                    // Close mobile menu if open
+                    document.querySelector('nav ul').classList.remove('show');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
